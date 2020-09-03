@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h2>{{ book.title }}</h2>
+  {% if perms.catalog.can_edit_authors %}
+  <p><a href="{% url 'book_update' book.id %}">edit book?</a> // 
+  <a href="{% url 'book_delete' book.id %}">delete book?</a></p>
+  {% endif %}
+  <p><a href="{% url 'books' %}">&lt;&lt; back</a></p>
+  <hr>
+
+  <p><strong>Author:</strong> <a href="{% url 'author-detail' book.author.pk %}">{{ book.author }}</a></p>
+  <p><strong>Summary:</strong> {{ book.summary }}</p>
+  <p><strong>ISBN:</strong> {{ book.isbn }}</p> 
+  <p><strong>Language:</strong> {{ book.language }}</p>  
+  <p><strong>Genre(s):</strong> {{ book.genre.all|join:", " }}</p>  
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Copies</h4>
+    {% if perms.catalog.can_create_copy %}
+      <p><a href="{% url 'book_instance_create' %}">Add new copy of book to library?</a>
+    {% endif %}
+    {% for copy in book.bookinstance_set.all %}
+      <hr>
+      <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">
+        {{ copy.get_status_display }}
+      </p>
+      {% include 'catalog/partials/bookinstance_detail.html' %}
+    {% endfor %}
+  </div>
+{% endblock %}

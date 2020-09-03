@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h2>Return: {{ book_instance.book.title }}</h2>
+  <p>Borrower: {{ book_instance.borrower }}</p>
+  <p>Are you sure that this book has been returned?</p>
+    
+  {% include 'catalog/forms/model_form.html' %}
+  
+{% endblock %}

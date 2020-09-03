@@ -1,0 +1,18 @@
+{% if copy.status == 'o' %}
+    <div class="{% if copy.is_overdue %}text-danger{% else %}text-success{% endif %}">
+        <p><strong>Due back:</strong> {{ copy.due_back }}{% if perms.catalog.can_mark_returned %} // <strong>{{ copy.borrower.username }}</strong>{% endif %}</p>
+    </div>
+{% endif %}
+<p><strong>Title:</strong><a href="{% url 'book-detail' copy.book.pk %}"> {{copy.book.title}}</a></p>
+<p><strong>Imprint:</strong> {{ copy.imprint }}</p>
+<p><strong>Id:</strong><span class="text-muted"> {{ copy.id }}</span></p>
+<p>
+    {% if copy.status == 'o' and perms.catalog.can_mark_returned %}
+        <a href="{% url 'renew-book-librarian' copy.id %}">renew</a> //
+        <a href="{% url 'return-book-librarian' copy.id %}">return</a> //
+    {% endif %}
+    {% if perms.catalog.can_create_copy %}
+        <a href="{% url 'book_instance_update' copy.id %}">edit</a> // 
+        <a href="{% url 'book_instance_delete' copy.id %}">delete</a>
+    {% endif %}
+</p>

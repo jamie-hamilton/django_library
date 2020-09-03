@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>Delete Book Instance</h1>
+
+<p>Are you sure you want to delete this copy of {{ bookinstance.book }}?</p>
+<p class="text-muted">Copy id: {{ bookinstance.id }}</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="Yes, delete.">
+</form>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h1>Author List</h1>
+  {% if page_obj %}
+  <ul>
+    {% for author in page_obj %}
+      <li>
+        <a href="{{ author.get_absolute_url }}">{{ author.last_name }}</a>, {{ author.first_name }}
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>No authors found.</p>
+  {% endif %}       
+{% endblock %}

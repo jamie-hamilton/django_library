@@ -1,0 +1,35 @@
+.sidebar-nav {
+  padding: 0;
+  list-style: none; }
+
+a {
+  text-decoration: none;
+  color: #60b1fc; }
+  a:hover {
+    font-style: italic;
+    text-decoration: none;
+    color: #2e98fb; }
+
+.container-fluid {
+  padding: 20px; }
+
+body {
+  color: #494949; }
+  body h1, body h2, body h3,
+  body h4, body h5, body h6 {
+    color: rgba(168, 24, 24, 0.8);
+    letter-spacing: 0.2rem; }
+
+.sidebar-nav {
+  margin-top: 20px;
+  min-width: 110px;
+  height: 100%; }
+
+.errorlist {
+  list-style: none;
+  padding: 0;
+  font-size: 12px;
+  font-weight: bold;
+  color: #dc3545 !important; }
+
+/*# sourceMappingURL=styles.css.map */
