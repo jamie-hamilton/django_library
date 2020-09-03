@@ -88,7 +88,11 @@ class BookInstance(models.Model):
         null=True
     ) 
     imprint = models.CharField(max_length=200)
-    due_back = models.DateField(null=True, blank=True)
+    due_back = models.DateField(
+        null=True, 
+        blank=True,
+        help_text='(YYYY-MM-DD)'
+    )
 
 
     LOAN_STATUS = (
@@ -110,7 +114,8 @@ class BookInstance(models.Model):
         User, 
         on_delete=models.SET_NULL, 
         null=True, 
-        blank=True)
+        blank=True
+    )
 
     class Meta:
         ordering = ['due_back']
@@ -137,8 +142,18 @@ class Author(models.Model):
     """Represents an author"""
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    date_of_birth = models.DateField('born', null=True, blank=True)
-    date_of_death = models.DateField('died', null=True, blank=True)
+    date_of_birth = models.DateField(
+        'born', 
+        null=True, 
+        blank=True,
+        help_text='(YYYY-MM-DD)'
+    )
+    date_of_death = models.DateField(
+        'died', 
+        null=True, 
+        blank=True,
+        help_text='(YYYY-MM-DD)'
+    )
 
     class Meta:
         ordering = ['last_name', 'first_name']
