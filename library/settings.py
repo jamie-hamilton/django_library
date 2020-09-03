@@ -30,7 +30,9 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '&p4(9%pt^=4cna-6abpw=#-4*)0joj
 # environment variable set to False with $export DJANGO_DEBUG=False
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = []
+# Required if DEBUG is set to 'False'
+# Include both base app URL and development server URL
+ALLOWED_HOSTS = ['murmuring-meadow-13423.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
