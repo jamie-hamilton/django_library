@@ -2,9 +2,10 @@ from django.contrib import admin
 
 
 # Register your models here.
-from .models import Author, Genre, Book, BookInstance, Language
+from .models import IndexContent, Author, Genre, Book, BookInstance, Language
 
 # Register simple models in admin without customising:
+admin.site.register(IndexContent)
 admin.site.register(Genre)
 admin.site.register(Language)
 

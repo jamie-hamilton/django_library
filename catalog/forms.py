@@ -33,3 +33,15 @@ class ReturnBookForm(forms.ModelForm):
     class Meta:
         model = BookInstance
         fields = ['status']
+
+class SearchForm(forms.Form):
+    q = forms.CharField(
+                label='',
+                widget=forms.TextInput(
+                        attrs={
+                            'placeholder': 'Book title...', 'name': 'q',
+                            'autocomplete': 'off',
+                            'class': "form-control",
+                        }
+                    )
+                )

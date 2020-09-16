@@ -8,6 +8,13 @@ from datetime import date
 # Required for unique book instances
 import uuid
 
+class IndexContent(models.Model):
+    title = models.CharField(max_length=50)
+    body = models.TextField()
+
+    def __str__(self):
+        return self.title
+
 # Create your models here.
 class Genre(models.Model):
     """Represents genres of related book"""
