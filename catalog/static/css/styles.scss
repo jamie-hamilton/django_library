@@ -11,12 +11,17 @@ $font-primary: rgb(73, 73, 73);
 }
 
 %link-primary {
-    text-decoration: none;
-    color: $secondary-color;
+    padding: 8px;
+    background: rgba(0.1,0.1,0.1,0.7);
+    color: white;
+    transition: all ease-in-out 0.3s;
+    -webkit-transition: all ease-out 0.3s;
     &:hover {
-        font-style: italic;
-        text-decoration: none;
-        color: darken($secondary-color, 10%);
+        cursor: pointer;
+        color: white;
+        background: rgba(0,0,0,1);
+        transition: all ease-in 0.2s;
+        -webkit-transition: all ease-in 0.2s;
     }
 }
 
@@ -26,20 +31,35 @@ $font-primary: rgb(73, 73, 73);
 
 
 // Select headings for customisation
-h1, h2, h3,
-h4, h5, h6 {
+h1, h2 {
     @extend %headings !optional;
+}
+
+h3, h4, 
+h5, h6 {
+    @extend %sub-headings !optional;
 }
 
 body {
     color: $font-primary;
+    font-family: 'Courier New', Courier, monospace;
     %headings {
-        color: $primary-color;
-        letter-spacing: 0.2rem;
+        color: white;
+        background: black;
+        margin: 30px 20px;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        text-align: center;
+    }
+    %sub-headings {
+        display: flex;
+        text-align: left;
     }
 }
 
-a {
+a, .btn-secondary,
+input[type=submit] {
     @extend %link-primary;
 }
 
@@ -50,10 +70,117 @@ a {
     @extend %nav-items;
 }
 
+.index {
+    display: inline-block;
+}
+
+.search {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    margin-right: 40px;
+    font-size: 15px;
+    margin-bottom: 30px;
+}
+
+td input {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+input[type=submit] {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.form-group {
+    margin: 5px;
+}
+
+.form-group input:focus, .form-group textarea:focus,
+td input:focus, td textarea:focus {
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+    border: 2px solid black;
+    outline: none;
+    transition: all ease-in-out 0.4s;
+    -webkit-transition: all ease-in-out 0.4s;
+}
+
+.form-group textarea {
+    height: 60vh;
+    margin-top: 10px;
+}
+
+.pagination {
+    margin-top: 40px;
+}
+
 .errorlist {
     list-style: none;
     padding: 0;
     font-size: 12px;
     font-weight: bold;
     color: #dc3545!important;
+}
+
+.img-fluid {
+    padding: 30px;
+}
+
+.btn-create {
+    @extend %link-primary;
+    background: rgba(40, 167, 69, 0.8);
+    color: white;
+    &:hover {
+        color: white;
+        background: rgba(40, 167, 69, 1);
+    }
+}
+
+.btn-edit {
+    @extend %link-primary;
+    background: rgba(255, 192, 10, 0.8);
+    color: white;
+    &:hover {
+        color: white;
+        background: rgba(253, 192, 10, 1);
+    }
+}
+
+.btn-delete {
+    @extend %link-primary;
+    background: rgba(220, 53, 69, 0.8);
+    color: white;
+    &:hover {
+        color: white;
+        background: rgba(220, 53, 69,1);
+    }
 }

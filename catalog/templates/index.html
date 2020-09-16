@@ -1,19 +1,28 @@
 {% extends "layout.html" %}
+{% load markdown_extras %}
+{% load static %}
 
 {% block content %}
-  <h2>Library Home</h2>
-  <p>This project was built around the topics covered in <a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Tutorial_local_library_website">MDN's server side development tutorial</a>.</p>
-  <p>This web application may not be particularly original (or pretty!), but was important in furthering my understanding of several key features of Django, including:</p>
-  <ul>
-    <li>ORMs</li>
-    <li>Django Admin customisation</li>
-    <li>Class based and function based views</li>
-    <li>Django forms</li>
-    <li>User authorisations and sessions</li>
-    <li>Unit testing</li>
-    <li>Security</li>
-    <li>Deployment config</li>
-  </ul>
+
+  <h2>{{ intro.title }}</h2>
+  <div>
+    {{ intro.body | markdown | safe }}
+  </div>
+
+  <div>
+    <hr />
+    <p>Have a browse around!</p>
+    <p>Books, authors and book statuses are viewable without a login - authentications ensure that only 'librarians' 
+      have access to create, edit, update and renew books/authors:</p>
+      <div class="row w-auto mx-4 justify-content-start">
+        <div class="col-lg-5">
+          <img src="{% static 'images/book_view.png' %}" class="img-fluid">
+        </div>
+        <div class="col-lg-5">
+          <img src="{% static 'images/on_loan.png' %}" class="img-fluid">
+        </div>
+      </div>
+  <hr />
   <h3>Dynamic content</h3>
   <p>The library has the following record counts:</p>
   <ul>
@@ -24,6 +33,6 @@
   </ul>
 
   {% if num_visits > 0 %}
-  <small class="text-muted">You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</small>
+  <small class="text-muted">You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %} in this session.</small>
   {% endif %}
 {% endblock %}

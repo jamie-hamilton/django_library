@@ -16,12 +16,15 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required, permission_required
 
 # Import models to view;
-from catalog.models import Book, Author, BookInstance, Genre
-from catalog.forms import RenewBookForm, ReturnBookForm
+from catalog.models import Book, Author, BookInstance, Genre, IndexContent
+from catalog.forms import RenewBookForm, ReturnBookForm, SearchForm
 
 
 def index(request):
     """Home page view function"""
+
+    # Pull in introduction content from IndexContent model
+    intro = IndexContent.objects.first()
 
     # Generate counts of main objects
     num_books = Book.objects.count()
@@ -39,6 +42,7 @@ def index(request):
 
     # Pass variables to view
     context = {
+        'intro': intro,
         'num_books': num_books,
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
@@ -57,11 +61,11 @@ class BookListView(generic.ListView):
     model = Book
     # pagination is included in generic.ListView
     # can be applied as so:
-    paginate_by = 10
+    paginate_by = 20
 
     # ordering queryset ensures that pagination doesn't throw an error
     # https://docs.djangoproject.com/en/1.11/topics/class-based-views/generic-display/#making-friendly-template-contexts
-    def get_queryset(self) :
+    def get_queryset(self):
         queryset = Book.objects.order_by('title')
         return queryset
 
@@ -71,11 +75,30 @@ class BookListView(generic.ListView):
         # Call the base implementation first to get the context
         context = super(BookListView, self).get_context_data(**kwargs)
         # Create any data and add it to the context
-        context['some_data'] = 'This is just some data'
+        context['form'] = SearchForm()
         return context
 
 
-class BookDetailView(LoginRequiredMixin, generic.DetailView):
+class BookSearchView(generic.ListView):
+    model = Book
+    paginate_by = 20
+
+    def get_queryset(self):
+        q = self.request.GET['q']
+        queryset = Book.objects.filter(title__contains=q).order_by('title')
+        return queryset
+    
+    # additional data can be added to context of class view
+    # this overrides get_context_data() function
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get the context
+        context = super(BookSearchView, self).get_context_data(**kwargs)
+        # Create any data and add it to the context
+        context['form'] = SearchForm()
+        return context
+
+
+class BookDetailView(generic.DetailView):
     model = Book
 
 
@@ -122,7 +145,7 @@ class BookInstanceDelete(PermissionRequiredMixin, DeleteView):
 def author_list(request):
     # function based view pagination:
     author_list = Author.objects.all()
-    paginator = Paginator(author_list, 10)
+    paginator = Paginator(author_list, 20)
     page_number = request.GET.get('page')
     # required for is_paginated layout ifs:
     is_paginated = True if paginator.num_pages > 1 else False
@@ -131,7 +154,7 @@ def author_list(request):
     context = {'page_obj': page_obj, 'is_paginated': is_paginated}
     return render(request, "catalog/author_list.html", context)
 
-@login_required
+
 def author_detail(request, pk):
     author = Author.objects.get(pk=pk)
 
@@ -161,7 +184,7 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     """Generic class-based view listing books on loan to current user."""
     model = BookInstance
     template_name ='catalog/bookinstance_list_borrowed.html'
-    paginate_by = 10
+    paginate_by = 20
     
     # re-implement get_queryset() to restrict query to solely request.user
     def get_queryset(self):
@@ -173,7 +196,7 @@ class LoanedBooksLibrarianListView(LoginRequiredMixin, PermissionRequiredMixin, 
     model = BookInstance
     permission_required = 'catalog.can_mark_returned'
     template_name ='catalog/bookinstance_list_borrowed.html'
-    paginate_by = 10
+    paginate_by = 20
     
     # re-implement get_queryset() to restrict query to solely request.user
     def get_queryset(self):

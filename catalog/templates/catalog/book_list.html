@@ -1,16 +1,20 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <h1>Book List</h1>
+  <h1>Books</h1>
+  <form class="form-inline search" action="{% url 'search' %}" method="GET" class="search">
+    <div class="form-group"> 
+        {{ form }}
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-secondary">Search</button>
+    </div>
+  </form>
   {% if book_list %}
-  <ul>
     {% for book in book_list %}
-      <li>
-        <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{book.author}})
-      </li>
+    <p class="index"><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></p>
     {% endfor %}
-  </ul>
   {% else %}
-    <p>There are no books in the library.</p>
+    <p>Sorry, there are no matching results.</p>
   {% endif %}       
 {% endblock %}
