@@ -85,7 +85,7 @@ class BookSearchView(generic.ListView):
 
     def get_queryset(self):
         q = self.request.GET['q']
-        queryset = Book.objects.filter(title__contains=q).order_by('title')
+        queryset = Book.objects.filter(title__icontains=q).order_by('title')
         return queryset
     
     # additional data can be added to context of class view
