@@ -5,6 +5,8 @@ A local library application that allows 'librarians' to create, edit, update and
 __tl;dr:__
 - ORMs! Django admin! Unit Testing! Security! Production consideration!
 
+- see the finished project [here](https://murmuring-meadow-13423.herokuapp.com) (it'll take a few seconds to get going as it is on a hobby server)
+
 - favourite code snippet:
 ```Python
   # generic views were a revelation:
